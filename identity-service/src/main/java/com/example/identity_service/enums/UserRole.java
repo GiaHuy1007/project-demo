@@ -17,4 +17,6 @@ package com.example.identity_service.enums;
  * ============================================================================
  */
 public enum UserRole {
+    ADMIN,
+    USER
 }

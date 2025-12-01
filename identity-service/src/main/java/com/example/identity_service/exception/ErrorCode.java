@@ -27,6 +27,9 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     NOT_FOUND(1000, "Not found", HttpStatus.NOT_FOUND),
     INVALID_KEY(1001, "Invalid key", HttpStatus.BAD_REQUEST),
+    ROLE_NOT_FOUND(1002, "Role not found", HttpStatus.BAD_REQUEST),
+    PERMISSION_NOT_FOUND(1003, "Permission not found", HttpStatus.BAD_REQUEST),
+    USER_EXISTED(1004, "User already existed", HttpStatus.CONFLICT),
     EXCEPTION(9999, "Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR),
     ;
     int code;

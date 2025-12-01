@@ -1,30 +1,30 @@
 package com.example.identity_service.mapper;
 
-import com.example.identity_service.dto.request.UserCreateRequest;
-import com.example.identity_service.dto.response.UserResponse;
-import com.example.identity_service.entity.User;
+import com.example.identity_service.dto.request.RoleRequest;
+import com.example.identity_service.dto.response.RoleResponse;
+import com.example.identity_service.entity.Role;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 /**
  * ============================================================================
  * Project      : project
- * File         : UserMapper.java
+ * File         : RoleMapper.java
  * Description  : TODO - Mô tả ngắn gọn chức năng của class này.
  * <p>
  * Author       : Gia Huy
- * Created On   : 11/30/2025 11:27 PM
- * Last Updated : 11/30/2025
+ * Created On   : 12/1/2025 9:51 PM
+ * Last Updated : 12/1/2025
  * <p>
  * Package      : com.example.identity_service.mapper
  * Version      : 1.0
  * <p>
- * Copyright © 11/30/2025. All rights reserved.
+ * Copyright © 12/1/2025. All rights reserved.
  * ============================================================================
  */
 @Mapper(componentModel = "spring")
-public interface UserMapper {
-    @Mapping(target = "roles", ignore = true)
-    User toUser(UserCreateRequest request);
-    UserResponse toUserResponse(User user);
+public interface RoleMapper {
+    @Mapping(target = "permissions", ignore = true)
+    Role toRole(RoleRequest roleRequest);
+    RoleResponse toRoleResponse(Role role);
 }

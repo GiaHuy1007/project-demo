@@ -3,8 +3,13 @@ package com.example.identity_service.service;
 import com.example.identity_service.dto.request.UserCreateRequest;
 import com.example.identity_service.dto.request.UserUpdateRequest;
 import com.example.identity_service.dto.response.UserResponse;
+import com.example.identity_service.entity.Role;
 import com.example.identity_service.entity.User;
+import com.example.identity_service.enums.UserRole;
+import com.example.identity_service.exception.AppException;
+import com.example.identity_service.exception.ErrorCode;
 import com.example.identity_service.mapper.UserMapper;
+import com.example.identity_service.repository.RoleRepository;
 import com.example.identity_service.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * ============================================================================
@@ -40,14 +47,18 @@ public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
+    RoleRepository  roleRepository;
 
     public UserResponse createUser(UserCreateRequest request) {
         User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Set<Role> roles = new HashSet<>();
+        roleRepository.findById(UserRole.USER.toString()).ifPresent(roles::add);
+        user.setRoles(roles);
         try {
             userRepository.save(user);
         } catch (RuntimeException e) {
-            log.error("User existed");
+            throw new AppException(ErrorCode.USER_EXISTED);
         }
         return userMapper.toUserResponse(user);
     }
